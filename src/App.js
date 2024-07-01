@@ -1,23 +1,18 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
 
 function App() {
+  let [text, setText] = useState('');
+  let [changedText, setchangedText] = useState('');
+  const log = (text) => setText(text);
+  let k = '';
+  const handlerClick = () => setchangedText(text);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <input onChange={(event) => log(event.target.value)} />
+      <button onClick={handlerClick}>ENTER</button>
+      <p>{changedText}</p>
     </div>
   );
 }
