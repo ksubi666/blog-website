@@ -2,17 +2,30 @@ import { useState } from 'react';
 import './App.css';
 
 function App() {
-  let [text, setText] = useState('');
-  let [changedText, setchangedText] = useState('');
-  const log = (text) => setText(text);
-  let k = '';
-  const handlerClick = () => setchangedText(text);
+  let [inputText, setinputText] = useState('');
+  let [todos, setTodos] = useState([]);
+  const log = (text) => setinputText(text);
 
+  const handlerClick = () => {
+    setTodos([...todos, inputText]);
+    setinputText('');
+  };
+  const deleteClick = (index) => {
+    const newTodos = todos.filter((todos, i) => index !== i);
+    setTodos(newTodos);
+  };
   return (
     <div>
-      <input onChange={(event) => log(event.target.value)} />
+      <input value={inputText} onChange={(event) => log(event.target.value)} />
       <button onClick={handlerClick}>ENTER</button>
-      <p>{changedText}</p>
+      <ul>
+        {todos.map((todo, index) => (
+          <li key={index}>
+            {todo}
+            <button onClick={() => deleteClick(index)}>x</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
