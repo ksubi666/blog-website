@@ -1,33 +1,42 @@
 import { useState } from 'react';
 import './App.css';
+import { CustomLiTag } from './components/CustomLiTag';
 
-function App() {
-  let [inputText, setinputText] = useState('');
+const App = () => {
+  let [inputText, setInputText] = useState('');
   let [todos, setTodos] = useState([]);
-  const log = (text) => setinputText(text);
+
+  const log = (value) => {
+    setInputText(value);
+  };
+  // console.log(inputText)
 
   const handlerClick = () => {
     setTodos([...todos, inputText]);
-    setinputText('');
+    setInputText('');
   };
-  const deleteClick = (index) => {
-    const newTodos = todos.filter((todos, i) => index !== i);
-    setTodos(newTodos);
-  };
+
   return (
     <div>
-      <input value={inputText} onChange={(event) => log(event.target.value)} />
-      <button onClick={handlerClick}>ENTER</button>
+      <input
+        value={inputText}
+        onChange={(event) => {
+          log(event.target.value);
+        }}
+      />
+      <button onClick={handlerClick}>add</button>
       <ul>
         {todos.map((todo, index) => (
-          <li key={index}>
-            {todo}
-            <button onClick={() => deleteClick(index)}>x</button>
-          </li>
+          <CustomLiTag
+            index={index}
+            todos={todos}
+            todo={todo}
+            setTodos={setTodos}
+          />
         ))}
       </ul>
     </div>
   );
-}
+};
 
 export default App;
